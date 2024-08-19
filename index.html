@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>California Adjustment Calculator</title>
+</head>
+<body>
+    <h1>California Adjustment Calculator</h1>
+    <form id="adjustmentForm">
+        <label for="impairment_standard">Impairment Standard:</label><br>
+        <input type="text" id="impairment_standard" name="impairment_standard"><br><br>
+
+        <label for="impairment_number">Impairment Number:</label><br>
+        <input type="text" id="impairment_number" name="impairment_number"><br><br>
+
+        <label for="occupational_group">Occupational Group:</label><br>
+        <input type="text" id="occupational_group" name="occupational_group"><br><br>
+
+        <label for="age">Age:</label><br>
+        <input type="text" id="age" name="age"><br><br>
+
+        <input type="button" value="Calculate" onclick="submitForm()">
+    </form>
+
+    <h2>Result</h2>
+    <p id="result"></p>
+
+    <script>
+        function submitForm() {
+            var formData = {
+                impairment_standard: document.getElementById('impairment_standard').value,
+                impairment_number: document.getElementById('impairment_number').value,
+                occupational_group: document.getElementById('occupational_group').value,
+                age: document.getElementById('age').value
+            };
+
+            fetch('/calculate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = "Age Adjustment: " + data.age_adjustment;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
+

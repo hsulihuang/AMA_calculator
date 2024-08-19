@@ -1,24 +1,9 @@
-# Import Modules
+from flask import Flask, request, jsonify, render_template_string
 import pandas as pd
-import numpy as np
 
-# Import Tables
-table21 = pd.read_csv('table21.csv', sep=',')
-table22 = pd.read_csv('table22.csv', sep=',')
-table23 = pd.read_csv('table23.csv', sep=',')
-table41 = pd.read_csv('table41.csv', sep=',')
-table51 = pd.read_csv('table51.csv', sep=',')
-table61 = pd.read_csv('table61.csv', sep=',')
-table62 = pd.read_csv('table62.csv', sep=',')
-
-# Inputs
-impairment_standard = 20
-impairment_number = '16.04.01.00'
-occupational_group = 240
-age = 45
+app = Flask(__name__)
 
 # Integrated Calculator for California Adjustment
-# To combine all the above steps into a single function with the four input variables 
 def california_adjustment(impairment_standard, impairment_number, occupational_group, age):
     # Step 01: Find the FEC Rank for the given Impairment Number
     FEC_rank = table22.loc[table22['Impairment Number'] == str(impairment_number), 'Rank'].values[0]
@@ -55,38 +40,75 @@ def california_adjustment(impairment_standard, impairment_number, occupational_g
     # Output the final result
     return age_adjustment
 
-# Example usage:
-# APDR = california_adjustment(impairment_standard=5, impairment_number='03.05.00.00', occupational_group=220, age=35)
-# print(f"The Adjusted Permanent Disability Rating is {APDR}.")
+# Route to serve the HTML form
+@app.route('/')
+def form():
+    return render_template_string("""
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>California Adjustment Calculator</title>
+    </head>
+    <body>
+        <h1>California Adjustment Calculator</h1>
+        <form id="adjustmentForm">
+            <label for="impairment_standard">Impairment Standard:</label><br>
+            <input type="text" id="impairment_standard" name="impairment_standard"><br><br>
 
-# Example:
-APDR = california_adjustment(impairment_standard, impairment_number, occupational_group, age)
-print(f"The Adjusted Permanent Disability Rating is {APDR}.")
+            <label for="impairment_number">Impairment Number:</label><br>
+            <input type="text" id="impairment_number" name="impairment_number"><br><br>
 
-# Calculator for AMA Impairment Combination
-# Combine multiple Age Adjustments as the Overall Permanent Disability Rating
+            <label for="occupational_group">Occupational Group:</label><br>
+            <input type="text" id="occupational_group" name="occupational_group"><br><br>
 
-# Step 1: Define the list of numbers
-numbers = [30, 20, 5, 40, 10]
+            <label for="age">Age:</label><br>
+            <input type="text" id="age" name="age"><br><br>
 
-# Step 2: Reorder the numbers from largest to smallest
-numbers.sort(reverse=True)
+            <input type="button" value="Calculate" onclick="submitForm()">
+        </form>
 
-# Step 3: Divide all numbers by 100
-numbers = [num / 100 for num in numbers]
+        <h2>Result</h2>
+        <p id="result"></p>
 
-# Step 4: Define the formula A + B - A * B
-def combine(a, b):
-    return a + b - a * b
+        <script>
+            function submitForm() {
+                var formData = {
+                    impairment_standard: document.getElementById('impairment_standard').value,
+                    impairment_number: document.getElementById('impairment_number').value,
+                    occupational_group: document.getElementById('occupational_group').value,
+                    age: document.getElementById('age').value
+                };
 
-# Step 5: Combine the numbers until only one is left
-while len(numbers) > 1:
-    # Combine the first two elements using the formula
-    combined_value = combine(numbers[0], numbers[1])
-    # Replace the first two elements with the combined value
-    numbers = [combined_value] + numbers[2:]
+                fetch('/calculate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerText = "Age Adjustment: " + data.age_adjustment;
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        </script>
+    </body>
+    </html>
+    """)
 
-# The final number after all combinations
-result = round(numbers[0] * 100)
+# Route to handle the form submission
+@app.route('/calculate', methods=['POST'])
+def calculate():
+    data = request.get_json()
+    impairment_standard = data['impairment_standard']
+    impairment_number = data['impairment_number']
+    occupational_group = data['occupational_group']
+    age = data['age']
+    result = california_adjustment(impairment_standard, impairment_number, occupational_group, age)
+    return jsonify({"age_adjustment": result})
 
-print(f"The Overall Permanent Disability Rating is: {result}%")
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)
