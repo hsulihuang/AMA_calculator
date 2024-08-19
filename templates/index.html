@@ -40,25 +40,30 @@
     </form>
 
     <script>
-        // Update Impairment Number dropdown based on selected Category
         document.getElementById('category').addEventListener('change', function() {
             const selectedCategory = this.value;
             const impairmentDropdown = document.getElementById('impairment_number');
             impairmentDropdown.innerHTML = '<option value="">Select Impairment Number</option>';
-
+    
             if (selectedCategory) {
                 fetch(`/get_impairment_numbers?category=${selectedCategory}`)
                     .then(response => response.json())
                     .then(data => {
+                        if (data.length === 0) {
+                            console.log("No impairment numbers found for the selected category.");
+                        }
                         data.forEach(item => {
                             const option = document.createElement('option');
                             option.value = item.Impairment_Number;
                             option.text = item.Impairment_Number;
                             impairmentDropdown.appendChild(option);
                         });
+                    })
+                    .catch(error => {
+                        console.error("Error fetching impairment numbers:", error);
                     });
             }
         });
-    </script>
+    </script>    
 </body>
 </html>
