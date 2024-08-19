@@ -41,13 +41,7 @@ def california_adjustment(impairment_standard, impairment_number, occupational_g
 @app.route('/')
 def form():
     categories = table21['Category'].unique().tolist()
-    impairment_numbers = table22['Impairment Number'].tolist()
-    return render_template('index.html', categories=categories, impairment_numbers=impairment_numbers)
-
-@app.route('/get_categories', methods=['GET'])
-def get_categories():
-    categories = table21['Category'].unique()
-    return jsonify([{'Category': category} for category in categories])
+    return render_template('index.html', categories=categories)
 
 @app.route('/get_impairment_numbers', methods=['GET'])
 def get_impairment_numbers():
@@ -60,7 +54,7 @@ def get_impairment_numbers():
 def calculate():
     try:
         impairment_standard = request.form['impairment_standard']
-        impairment_number = request.form['impairment']
+        impairment_number = request.form['impairment_number']
         occupational_group = request.form['occupational_group']
         age = int(request.form['age'])
 

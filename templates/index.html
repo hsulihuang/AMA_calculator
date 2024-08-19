@@ -40,32 +40,23 @@
     </form>
 
     <script>
-        // Data for dynamic dropdowns
-        const impairmentData = {
-            {% for category in categories %}
-            "{{ category }}": [
-                {% for index, row in table22.iterrows() %}
-                    {% if row['Impairment Number'][:2] == category %}
-                    "{{ row['Impairment Number'] }}",
-                    {% endif %}
-                {% endfor %}
-            ],
-            {% endfor %}
-        };
-
         // Update Impairment Number dropdown based on selected Category
         document.getElementById('category').addEventListener('change', function() {
             const selectedCategory = this.value;
             const impairmentDropdown = document.getElementById('impairment_number');
             impairmentDropdown.innerHTML = '<option value="">Select Impairment Number</option>';
 
-            if (selectedCategory in impairmentData) {
-                impairmentData[selectedCategory].forEach(function(impairment) {
-                    const option = document.createElement('option');
-                    option.value = impairment;
-                    option.text = impairment;
-                    impairmentDropdown.appendChild(option);
-                });
+            if (selectedCategory) {
+                fetch(`/get_impairment_numbers?category=${selectedCategory}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            const option = document.createElement('option');
+                            option.value = item.Impairment_Number;
+                            option.text = item.Impairment_Number;
+                            impairmentDropdown.appendChild(option);
+                        });
+                    });
             }
         });
     </script>
