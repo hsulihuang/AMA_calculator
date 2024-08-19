@@ -12,12 +12,6 @@ table51 = pd.read_csv('table51.csv', sep=',')
 table61 = pd.read_csv('table61.csv', sep=',')
 table62 = pd.read_csv('table62.csv', sep=',')
 
-# Set Variables
-impairment_standard = str()
-impairment_number = str()
-occupational_group = str()
-age = str()
-
 # Integrated Calculator for California Adjustment
 def california_adjustment(impairment_standard, impairment_number, occupational_group, age):
     # Step 01: Find the FEC Rank for the given Impairment Number
