@@ -39,19 +39,21 @@
         <input type="submit" value="Calculate">
     </form>
 
+    
+
     <script>
         document.getElementById('category').addEventListener('change', function() {
             const selectedCategory = this.value;
+            console.log(`Selected Category: ${selectedCategory}`);
+            
             const impairmentDropdown = document.getElementById('impairment_number');
             impairmentDropdown.innerHTML = '<option value="">Select Impairment Number</option>';
-    
+        
             if (selectedCategory) {
                 fetch(`/get_impairment_numbers?category=${selectedCategory}`)
                     .then(response => response.json())
                     .then(data => {
-                        if (data.length === 0) {
-                            console.log("No impairment numbers found for the selected category.");
-                        }
+                        console.log("Data received:", data);
                         data.forEach(item => {
                             const option = document.createElement('option');
                             option.value = item.Impairment_Number;

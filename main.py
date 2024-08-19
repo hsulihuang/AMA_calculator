@@ -42,12 +42,15 @@ def california_adjustment(impairment_standard, impairment_number, occupational_g
 def form():
     categories = table21['Category'].unique().tolist()
     return render_template('index.html', categories=categories)
-
+    
 @app.route('/get_impairment_numbers', methods=['GET'])
 def get_impairment_numbers():
     try:
         selected_category = request.args.get('category')
+        print(f"Selected category: {selected_category}")
+        
         impairment_numbers = table22[table22['Category'] == selected_category]['Impairment Number'].unique()
+        print(f"Impairment numbers found: {impairment_numbers}")
         
         return jsonify([{'Impairment_Number': impairment_number} for impairment_number in impairment_numbers])
 
