@@ -47,7 +47,7 @@ def form():
 def get_impairment_numbers():
     try:
         selected_category = request.args.get('category')
-        impairment_numbers = table22.loc[table22['Category'] == selected_category, 'Impairment Number'].unique()
+        impairment_numbers = table22.loc[table22['Category'] == int(selected_category), 'Impairment Number'].unique()
         
         return jsonify([{'Impairment_Number': impairment_number} for impairment_number in impairment_numbers])
 
