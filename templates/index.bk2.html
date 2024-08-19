@@ -7,14 +7,14 @@
 </head>
 <body>
     <h1>AMA Calculator</h1>
-    <form id="ama-form">
+    <form action="/calculate" method="post">
         <!-- Impairment Standard -->
         <label for="impairment_standard">Impairment Standard:</label>
-        <input type="text" id="impairment_standard" name="impairment_standard" required><br><br>
+        <input type="text" id="impairment_standard" name="impairment_standard"><br><br>
 
         <!-- Category -->
         <label for="category">Category:</label>
-        <select id="category" name="category" required>
+        <select id="category" name="category">
             <option value="">Select Category</option>
             {% for category in categories %}
             <option value="{{ category }}">{{ category }}</option>
@@ -23,36 +23,35 @@
 
         <!-- Impairment Number -->
         <label for="impairment_number">Impairment Number:</label>
-        <select id="impairment_number" name="impairment_number" required>
+        <select id="impairment_number" name="impairment_number">
             <option value="">Select Impairment Number</option>
         </select><br><br>
 
         <!-- Occupational Group -->
         <label for="occupational_group">Occupational Group:</label>
-        <input type="text" id="occupational_group" name="occupational_group" required><br><br>
+        <input type="text" id="occupational_group" name="occupational_group"><br><br>
 
         <!-- Age -->
         <label for="age">Age:</label>
-        <input type="number" id="age" name="age" required><br><br>
+        <input type="text" id="age" name="age"><br><br>
 
         <!-- Submit Button -->
-        <button type="submit">Calculate</button>
+        <input type="submit" value="Calculate">
     </form>
-
-    <!-- Result Section -->
-    <h2>Result:</h2>
-    <div id="result"></div>
 
     <script>
         document.getElementById('category').addEventListener('change', function() {
             const selectedCategory = this.value;
+            console.log(`Selected Category: ${selectedCategory}`);
+            
             const impairmentDropdown = document.getElementById('impairment_number');
             impairmentDropdown.innerHTML = '<option value="">Select Impairment Number</option>';
-    
+        
             if (selectedCategory) {
                 fetch(`/get_impairment_numbers?category=${selectedCategory}`)
                     .then(response => response.json())
                     .then(data => {
+                        console.log("Data received:", data);
                         data.forEach(item => {
                             const option = document.createElement('option');
                             option.value = item.Impairment_Number;
@@ -65,26 +64,6 @@
                     });
             }
         });
-
-        document.getElementById('ama-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const formData = new FormData(this);
-            fetch('/calculate', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                const resultDiv = document.getElementById('result');
-                resultDiv.innerHTML = `<p>Age Adjustment: ${data.age_adjustment}</p>`;
-            })
-            .catch(error => {
-                console.error("Error calculating:", error);
-                const resultDiv = document.getElementById('result');
-                resultDiv.innerHTML = `<p style="color: red;">An error occurred while calculating. Please try again.</p>`;
-            });
-        });
-    </script>
+    </script>    
 </body>
 </html>
