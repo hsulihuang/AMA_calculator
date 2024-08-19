@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template_string
+from flask import Flask, request, jsonify, render_template
 import pandas as pd
 
 app = Flask(__name__)
@@ -38,84 +38,43 @@ def california_adjustment(impairment_standard, impairment_number, occupational_g
     except Exception as e:
         return str(e)
 
-# HTML and JavaScript for a single-page interface
-html_code = """
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>California Adjustment Calculator</title>
-</head>
-<body>
-    <h1>California Adjustment Calculator</h1>
-    <form id="adjustmentForm">
-        <label for="impairment_standard">Impairment Standard:</label><br>
-        <input type="text" id="impairment_standard" name="impairment_standard"><br><br>
-
-        <label for="impairment_number">Impairment Number:</label><br>
-        <input type="text" id="impairment_number" name="impairment_number"><br><br>
-
-        <label for="occupational_group">Occupational Group:</label><br>
-        <input type="text" id="occupational_group" name="occupational_group"><br><br>
-
-        <label for="age">Age:</label><br>
-        <input type="text" id="age" name="age"><br><br>
-
-        <button type="button" onclick="submitForm()">Calculate</button>
-    </form>
-
-    <h2>Result</h2>
-    <p id="result"></p>
-
-    <script>
-        function submitForm() {
-            var formData = {
-                impairment_standard: document.getElementById('impairment_standard').value,
-                impairment_number: document.getElementById('impairment_number').value,
-                occupational_group: document.getElementById('occupational_group').value,
-                age: document.getElementById('age').value
-            };
-
-            fetch('/calculate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('result').innerText = "Final Permanent Disability Rating: " + data.age_adjustment + "%";
-            })
-            .catch(error => console.error('Error:', error));
-        }
-    </script>
-</body>
-</html>
-"""
-
 @app.route('/')
 def form():
-    return render_template_string(html_code)
+    return render_template('index.html')
+
+@app.route('/get_categories', methods=['GET'])
+def get_categories():
+    categories = table21['Category'].unique()
+    return jsonify([{'Category': category} for category in categories])
+
+@app.route('/get_impairment_numbers', methods=['GET'])
+def get_impairment_numbers():
+    selected_category = request.args.get('category')
+    impairment_prefix = table21[table21['Category'] == selected_category]['Category'].values[0][:2]
+    impairment_numbers = table22[table22['Impairment Number'].str.startswith(impairment_prefix)]['Impairment Number'].unique()
+    return jsonify([{'Impairment_Number': impairment_number} for impairment_number in impairment_numbers])
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
-    data = request.get_json()
-    impairment_standard = data.get('impairment_standard')
-    impairment_number = data.get('impairment_number')
-    occupational_group = data.get('occupational_group')
-    age = data.get('age')
-    
-    result = california_adjustment(impairment_standard, impairment_number, occupational_group, age)
-    
-    # Convert to standard Python int
-    if isinstance(result, pd.Series) or isinstance(result, pd.DataFrame):
-        result = result.to_dict()  # If the result is a pandas Series or DataFrame
-    else:
-        result = int(result)  # Convert int64 to standard int if it's a single number
-    
-    return jsonify({"age_adjustment": result})
+    try:
+        impairment_standard = request.form['impairment_standard']
+        impairment_number = request.form['impairment']
+        occupational_group = request.form['occupational_group']
+        age = int(request.form['age'])
+
+        result = california_adjustment(impairment_standard, impairment_number, occupational_group, age)
+        
+        # Convert to standard Python int
+        if isinstance(result, pd.Series) or isinstance(result, pd.DataFrame):
+            result = result.to_dict()  # If the result is a pandas Series or DataFrame
+        else:
+            result = int(result)  # Convert int64 to standard int if it's a single number
+            
+        return jsonify({"age_adjustment": int(result)})
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return "An error occurred", 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

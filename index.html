@@ -3,64 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>California Adjustment Calculator</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .error { color: red; }
-    </style>
+    <title>AMA California Adjustment Calculator</title>
 </head>
 <body>
-    <h1>California Adjustment Calculator</h1>
-    <form id="adjustmentForm">
-        <label for="impairment_standard">Impairment Standard:</label><br>
-        <input type="text" id="impairment_standard" name="impairment_standard"><br><br>
+    <h1>AMA California Adjustment Calculator</h1>
+    
+    <form id="ama-form" action="/calculate" method="POST">
+        <label for="impairment_standard">Impairment Standard:</label>
+        <input type="text" id="impairment_standard" name="impairment_standard" required>
 
-        <label for="impairment_number">Impairment Number:</label><br>
-        <input type="text" id="impairment_number" name="impairment_number"><br><br>
+        <br><br>
 
-        <label for="occupational_group">Occupational Group:</label><br>
-        <input type="text" id="occupational_group" name="occupational_group"><br><br>
+        <!-- New Category and Impairment Number dropdowns placed here -->
+        <label for="category">Category:</label>
+        <select id="category" name="category" onchange="loadImpairmentNumbers()">
+            <option value="">Select Category</option>
+        </select>
 
-        <label for="age">Age:</label><br>
-        <input type="text" id="age" name="age"><br><br>
+        <br><br>
 
-        <input type="button" value="Calculate" onclick="submitForm()">
+        <label for="impairment">Impairment Number:</label>
+        <select id="impairment" name="impairment">
+            <option value="">Select Impairment Number</option>
+        </select>
+
+        <br><br>
+
+        <label for="occupational_group">Occupational Group:</label>
+        <input type="text" id="occupational_group" name="occupational_group" required>
+
+        <br><br>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+
+        <br><br>
+
+        <button type="submit">Submit</button>
     </form>
 
-    <h2>Result</h2>
-    <p id="result"></p>
-    <p id="error" class="error"></p>
-
     <script>
-        function submitForm() {
-            document.getElementById('result').innerText = '';
-            document.getElementById('error').innerText = '';
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCategories();
+        });
 
-            var formData = {
-                impairment_standard: document.getElementById('impairment_standard').value,
-                impairment_number: document.getElementById('impairment_number').value,
-                occupational_group: document.getElementById('occupational_group').value,
-                age: document.getElementById('age').value
-            };
+        function loadCategories() {
+            fetch('/get_categories')
+                .then(response => response.json())
+                .then(data => {
+                    const categorySelect = document.getElementById('category');
+                    data.forEach(item => {
+                        let option = document.createElement('option');
+                        option.value = item.Category;
+                        option.text = item.Category;
+                        categorySelect.appendChild(option);
+                    });
+                });
+        }
 
-            fetch('/calculate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    document.getElementById('error').innerText = data.error;
-                } else {
-                    document.getElementById('result').innerText = "Age Adjustment: " + data.age_adjustment;
-                }
-            })
-            .catch(error => {
-                document.getElementById('error').innerText = "An error occurred: " + error;
-            });
+        function loadImpairmentNumbers() {
+            const selectedCategory = document.getElementById('category').value;
+            fetch(`/get_impairment_numbers?category=${selectedCategory}`)
+                .then(response => response.json())
+                .then(data => {
+                    const impairmentSelect = document.getElementById('impairment');
+                    impairmentSelect.innerHTML = '<option value="">Select Impairment Number</option>'; // Clear previous options
+                    data.forEach(item => {
+                        let option = document.createElement('option');
+                        option.value = item.Impairment_Number;
+                        option.text = item.Impairment_Number;
+                        impairmentSelect.appendChild(option);
+                    });
+                });
         }
     </script>
 </body>
