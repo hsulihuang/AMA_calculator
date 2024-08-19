@@ -3,6 +3,15 @@ import pandas as pd
 
 app = Flask(__name__)
 
+# Import Tables
+table21 = pd.read_csv('table21.csv', sep=',')
+table22 = pd.read_csv('table22.csv', sep=',')
+table23 = pd.read_csv('table23.csv', sep=',')
+table41 = pd.read_csv('table41.csv', sep=',')
+table51 = pd.read_csv('table51.csv', sep=',')
+table61 = pd.read_csv('table61.csv', sep=',')
+table62 = pd.read_csv('table62.csv', sep=',')
+
 # Integrated Calculator for California Adjustment
 def california_adjustment(impairment_standard, impairment_number, occupational_group, age):
     # Step 01: Find the FEC Rank for the given Impairment Number
