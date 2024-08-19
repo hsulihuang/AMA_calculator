@@ -3,79 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AMA California Adjustment Calculator</title>
+    <title>AMA Calculator</title>
 </head>
 <body>
-    <h1>AMA California Adjustment Calculator</h1>
-    
-    <form id="ama-form" action="/calculate" method="POST">
+    <h1>AMA Calculator</h1>
+    <form action="/calculate" method="post">
+        <!-- Impairment Standard -->
         <label for="impairment_standard">Impairment Standard:</label>
-        <input type="text" id="impairment_standard" name="impairment_standard" required>
+        <input type="text" id="impairment_standard" name="impairment_standard"><br><br>
 
-        <br><br>
-
-        <!-- New Category and Impairment Number dropdowns placed here -->
+        <!-- Category -->
         <label for="category">Category:</label>
-        <select id="category" name="category" onchange="loadImpairmentNumbers()">
+        <select id="category" name="category">
             <option value="">Select Category</option>
-        </select>
+            {% for category in categories %}
+            <option value="{{ category }}">{{ category }}</option>
+            {% endfor %}
+        </select><br><br>
 
-        <br><br>
-
-        <label for="impairment">Impairment Number:</label>
-        <select id="impairment" name="impairment">
+        <!-- Impairment Number -->
+        <label for="impairment_number">Impairment Number:</label>
+        <select id="impairment_number" name="impairment_number">
             <option value="">Select Impairment Number</option>
-        </select>
+        </select><br><br>
 
-        <br><br>
-
+        <!-- Occupational Group -->
         <label for="occupational_group">Occupational Group:</label>
-        <input type="text" id="occupational_group" name="occupational_group" required>
+        <input type="text" id="occupational_group" name="occupational_group"><br><br>
 
-        <br><br>
-
+        <!-- Age -->
         <label for="age">Age:</label>
-        <input type="number" id="age" name="age" required>
+        <input type="text" id="age" name="age"><br><br>
 
-        <br><br>
-
-        <button type="submit">Submit</button>
+        <!-- Submit Button -->
+        <input type="submit" value="Calculate">
     </form>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            loadCategories();
+        // Data for dynamic dropdowns
+        const impairmentData = {
+            {% for category in categories %}
+            "{{ category }}": [
+                {% for index, row in table22.iterrows() %}
+                    {% if row['Impairment Number'][:2] == category %}
+                    "{{ row['Impairment Number'] }}",
+                    {% endif %}
+                {% endfor %}
+            ],
+            {% endfor %}
+        };
+
+        // Update Impairment Number dropdown based on selected Category
+        document.getElementById('category').addEventListener('change', function() {
+            const selectedCategory = this.value;
+            const impairmentDropdown = document.getElementById('impairment_number');
+            impairmentDropdown.innerHTML = '<option value="">Select Impairment Number</option>';
+
+            if (selectedCategory in impairmentData) {
+                impairmentData[selectedCategory].forEach(function(impairment) {
+                    const option = document.createElement('option');
+                    option.value = impairment;
+                    option.text = impairment;
+                    impairmentDropdown.appendChild(option);
+                });
+            }
         });
-
-        function loadCategories() {
-            fetch('/get_categories')
-                .then(response => response.json())
-                .then(data => {
-                    const categorySelect = document.getElementById('category');
-                    data.forEach(item => {
-                        let option = document.createElement('option');
-                        option.value = item.Category;
-                        option.text = item.Category;
-                        categorySelect.appendChild(option);
-                    });
-                });
-        }
-
-        function loadImpairmentNumbers() {
-            const selectedCategory = document.getElementById('category').value;
-            fetch(`/get_impairment_numbers?category=${selectedCategory}`)
-                .then(response => response.json())
-                .then(data => {
-                    const impairmentSelect = document.getElementById('impairment');
-                    impairmentSelect.innerHTML = '<option value="">Select Impairment Number</option>'; // Clear previous options
-                    data.forEach(item => {
-                        let option = document.createElement('option');
-                        option.value = item.Impairment_Number;
-                        option.text = item.Impairment_Number;
-                        impairmentSelect.appendChild(option);
-                    });
-                });
-        }
     </script>
 </body>
 </html>

@@ -40,7 +40,9 @@ def california_adjustment(impairment_standard, impairment_number, occupational_g
 
 @app.route('/')
 def form():
-    return render_template('index.html')
+    categories = table21['Category'].unique().tolist()
+    impairment_numbers = table22['Impairment Number'].tolist()
+    return render_template('index.html', categories=categories, impairment_numbers=impairment_numbers)
 
 @app.route('/get_categories', methods=['GET'])
 def get_categories():
