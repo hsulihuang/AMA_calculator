@@ -47,16 +47,13 @@ def form():
 def get_impairment_numbers():
     try:
         selected_category = request.args.get('category')
-        impairment_prefix = table21.loc[table21['Category'] == selected_category, 'Category'].values[0][:2]
-        
-        impairment_numbers = table22[table22['Impairment Number'].str.startswith(impairment_prefix)]['Impairment Number'].unique()
+        impairment_numbers = table22[table22['Category'] == selected_category]['Impairment Number'].unique()
         
         return jsonify([{'Impairment_Number': impairment_number} for impairment_number in impairment_numbers])
 
     except Exception as e:
         print(f"Error fetching impairment numbers: {e}")
         return jsonify([]), 500
-
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
