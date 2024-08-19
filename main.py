@@ -86,7 +86,7 @@ html_code = """
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('result').innerText = "Age Adjustment: " + data.age_adjustment;
+                document.getElementById('result').innerText = "Final Permanent Disability Rating: " + data.age_adjustment + "%";
             })
             .catch(error => console.error('Error:', error));
         }
