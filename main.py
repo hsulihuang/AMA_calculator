@@ -117,15 +117,19 @@ def form():
 # Route to handle the form submission
 @app.route('/calculate', methods=['POST'])
 def calculate():
-    data = request.get_json()
-    print(f"Received data: {data}")
-    impairment_standard = data['impairment_standard']
-    impairment_number = data['impairment_number']
-    occupational_group = data['occupational_group']
-    age = data['age']
-    result = california_adjustment(impairment_standard, impairment_number, occupational_group, age)
-    print(f"Calculated result: {result}")
-    return jsonify({"age_adjustment": result})
+    try:
+        data = request.get_json()
+        print(f"Received data: {data}")
+        impairment_standard = data['impairment_standard']
+        impairment_number = data['impairment_number']
+        occupational_group = data['occupational_group']
+        age = data['age']
+        result = california_adjustment(impairment_standard, impairment_number, occupational_group, age)
+        print(f"Calculated result: {result}")
+        return jsonify({"age_adjustment": result})
+    except Exception as e:
+        print(f"Error occurred: {str(e)}")
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
