@@ -112,11 +112,13 @@ def form():
 @app.route('/calculate', methods=['POST'])
 def calculate():
     data = request.get_json()
+    print(f"Received data: {data}")
     impairment_standard = data['impairment_standard']
     impairment_number = data['impairment_number']
     occupational_group = data['occupational_group']
     age = data['age']
     result = california_adjustment(impairment_standard, impairment_number, occupational_group, age)
+    print(f"Calculated result: {result}")
     return jsonify({"age_adjustment": result})
 
 if __name__ == '__main__':
