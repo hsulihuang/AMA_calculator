@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template_string
+from flask import Flask, request, jsonify, render_template, render_template_string
 import pandas as pd
 
 app = Flask(__name__)
@@ -14,6 +14,7 @@ try:
     table62 = pd.read_csv('table62.csv', sep=',')
 except Exception as e:
     print(f"Error loading tables: {str(e)}")
+    raise
 
 # Integrated Calculator for California Adjustment
 def california_adjustment(impairment_standard, impairment_number, occupational_group, age):
@@ -75,69 +76,7 @@ def california_adjustment(impairment_standard, impairment_number, occupational_g
 # Route to serve the HTML form
 @app.route('/')
 def form():
-    return render_template_string("""
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>California Adjustment Calculator</title>
-    </head>
-    <body>
-        <h1>California Adjustment Calculator</h1>
-        <form id="adjustmentForm">
-            <label for="impairment_standard">Impairment Standard:</label><br>
-            <input type="text" id="impairment_standard" name="impairment_standard"><br><br>
-
-            <label for="impairment_number">Impairment Number:</label><br>
-            <input type="text" id="impairment_number" name="impairment_number"><br><br>
-
-            <label for="occupational_group">Occupational Group:</label><br>
-            <input type="text" id="occupational_group" name="occupational_group"><br><br>
-
-            <label for="age">Age:</label><br>
-            <input type="text" id="age" name="age"><br><br>
-
-            <input type="button" value="Calculate" onclick="submitForm()">
-        </form>
-
-        <h2>Result</h2>
-        <p id="result"></p>
-
-        <script>
-            function submitForm() {
-                var formData = {
-                    impairment_standard: document.getElementById('impairment_standard').value,
-                    impairment_number: document.getElementById('impairment_number').value,
-                    occupational_group: document.getElementById('occupational_group').value,
-                    age: document.getElementById('age').value
-                };
-
-                fetch('/calculate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    document.getElementById('result').innerText = "Age Adjustment: " + data.age_adjustment;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('result').innerText = "An error occurred: " + error.message;
-                });
-            }
-        </script>
-    </body>
-    </html>
-    """)
+    return render_template("index.html")
 
 # Route to handle the form submission
 @app.route('/calculate', methods=['POST'])
@@ -157,6 +96,15 @@ def calculate():
     except Exception as e:
         print(f"Error occurred: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
+# Custom error pages
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
