@@ -4,13 +4,13 @@ import pandas as pd
 app = Flask(__name__)
 
 # Load tables
-table21 = pd.read_csv('data/table21.csv')
-table22 = pd.read_csv('data/table22.csv')
-table23 = pd.read_csv('data/table23.csv')
-table41 = pd.read_csv('data/table41.csv')
-table51 = pd.read_csv('data/table51.csv')
-table61 = pd.read_csv('data/table61.csv')
-table62 = pd.read_csv('data/table62.csv')
+table21 = pd.read_csv('table21.csv', sep=',')
+table22 = pd.read_csv('table22.csv', sep=',')
+table23 = pd.read_csv('table23.csv', sep=',')
+table41 = pd.read_csv('table41.csv', sep=',')
+table51 = pd.read_csv('table51.csv', sep=',')
+table61 = pd.read_csv('table61.csv', sep=',')
+table62 = pd.read_csv('table62.csv', sep=',')
 
 # Function to perform the California adjustment calculation
 def california_adjustment(impairment_standard, impairment_number, occupational_group, age):
