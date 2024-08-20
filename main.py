@@ -47,9 +47,10 @@ def form():
 def get_impairment_numbers():
     try:
         selected_category = request.args.get('category')
-        impairment_numbers = table22.loc[table22['Category'] == int(selected_category), 'Impairment Number'].unique()
-        
-        return jsonify([{'Impairment_Number': impairment_number} for impairment_number in impairment_numbers])
+        impairment_numbers = table22.loc[table22['Category'] == int(selected_category), ['Impairment Number', 'Description']]
+
+        # Return a list of dictionaries with both the number and the description
+        return jsonify([{'Impairment_Number': row['Impairment Number'], 'Description': row['Description']} for _, row in impairment_numbers.iterrows()])
 
     except Exception as e:
         print(f"Error fetching impairment numbers: {e}")
