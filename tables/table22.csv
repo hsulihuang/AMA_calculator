@@ -1,15 +1,15 @@
 ﻿Impairment Number,Rank,Category
-03.01.00.00 Valvular Heart Disease,5,03 Cardiovascular System - Heart & Aorta
-03.02.00.00 Coronary Heart Disease,5,03 Cardiovascular System - Heart & Aorta
-03.03.00.00 Congenital Heart Disease,5,03 Cardiovascular System - Heart & Aorta
-03.04.00.00 Cardiomyopathies,5,03 Cardiovascular System - Heart & Aorta
-03.05.00.00 Pericardial Heart Disease,5,03 Cardiovascular System - Heart & Aorta
-03.06.00.00 Arrhythmia,5,03 Cardiovascular System - Heart & Aorta
-04.01.00.00 Hypertensive Cardiovascular Disease,5,04 Cardiovascular System - Systemic & Pulmonary Arteries
-04.02.00.00 Aortic Disease,5,04 Cardiovascular System - Systemic & Pulmonary Arteries
-"04.03.01.00 Peripheral Vascular Disease, Upper Extremities",5,04 Cardiovascular System - Systemic & Pulmonary Arteries
-"04.03.02.00 Peripheral Vascular Disease, Lower Extremities",5,04 Cardiovascular System - Systemic & Pulmonary Arteries
-04.04.00.00 Pulmonary Circulation Disease,7,04 Cardiovascular System - Systemic & Pulmonary Arteries
+03.01.00.00 Valvular Heart Disease,5,03 Cardiovascular System - Heart and Aorta
+03.02.00.00 Coronary Heart Disease,5,03 Cardiovascular System - Heart and Aorta
+03.03.00.00 Congenital Heart Disease,5,03 Cardiovascular System - Heart and Aorta
+03.04.00.00 Cardiomyopathies,5,03 Cardiovascular System - Heart and Aorta
+03.05.00.00 Pericardial Heart Disease,5,03 Cardiovascular System - Heart and Aorta
+03.06.00.00 Arrhythmia,5,03 Cardiovascular System - Heart and Aorta
+04.01.00.00 Hypertensive Cardiovascular Disease,5,04 Cardiovascular System - Systemic and Pulmonary Arteries
+04.02.00.00 Aortic Disease,5,04 Cardiovascular System - Systemic and Pulmonary Arteries
+"04.03.01.00 Peripheral Vascular Disease, Upper Extremities",5,04 Cardiovascular System - Systemic and Pulmonary Arteries
+"04.03.02.00 Peripheral Vascular Disease, Lower Extremities",5,04 Cardiovascular System - Systemic and Pulmonary Arteries
+04.04.00.00 Pulmonary Circulation Disease,7,04 Cardiovascular System - Systemic and Pulmonary Arteries
 05.01.00.00 Asthma,7,05 Respiratory System
 05.02.00.00 Respiratory Disorders,7,05 Respiratory System
 05.03.00.00 Cancer,7,05 Respiratory System
@@ -18,64 +18,64 @@
 06.03.00.00 Enterocutaneous Fistulas,6,06 Digestive System
 06.04.00.00 Liver/Biliary Tract,6,06 Digestive System
 06.05.00.00 Hernias,6,06 Digestive System
-07.01.00.00 Upper Urinary Tract,2,07 Urinary & Reproductive Systems
-07.02.00.00 Urinary Diversion,2,07 Urinary & Reproductive Systems
-07.03.00.00 Bladder,2,07 Urinary & Reproductive Systems
-07.04.00.00 Urethra,2,07 Urinary & Reproductive Systems
-07.05.00.00 Reproductive System,2,07 Urinary & Reproductive Systems
+07.01.00.00 Upper Urinary Tract,2,07 Urinary and Reproductive Systems
+07.02.00.00 Urinary Diversion,2,07 Urinary and Reproductive Systems
+07.03.00.00 Bladder,2,07 Urinary and Reproductive Systems
+07.04.00.00 Urethra,2,07 Urinary and Reproductive Systems
+07.05.00.00 Reproductive System,2,07 Urinary and Reproductive Systems
 08.01.00.00 Disfigurement,2,08 Skin
-08.02.00.00 Scars & Skin Grafts,2,08 Skin
+08.02.00.00 Scars and Skin Grafts,2,08 Skin
 08.03.00.00 Contact Dermatitis,2,08 Skin
 08.04.00.00 Latex Allergy,2,08 Skin
 08.05.00.00 Skin Cancer,2,08 Skin
 09.01.00.00 Hematopoietic Impairment,2,09 Hematopoietic System
 10.01.00.00 Diabetes Mellitus,2,10 Endocrine System
-11.01.01.00 Ear - Hearing Impairment,8,"11 Ear, Nose & Throat"
-11.01.02.00 Ear - Vestibular Disorder,8,"11 Ear, Nose & Throat"
-11.02.01.00 Face/cosmetic,2,"11 Ear, Nose & Throat"
-11.02.02.00 Face/eye/cosmetic,2,"11 Ear, Nose & Throat"
-11.03.01.00 Nose/Throat/Related Structures - Respiration,2,"11 Ear, Nose & Throat"
-11.03.02.00 Nose/Throat/Related Structures - Mastication & Deglutition,2,"11 Ear, Nose & Throat"
-11.03.03.00 Nose/Throat/Related Structures - Olfaction & Taste,2,"11 Ear, Nose & Throat"
-11.03.04.00 Nose/Throat/Related Structures - Voice & Speech,2,"11 Ear, Nose & Throat"
+11.01.01.00 Ear - Hearing Impairment,8,"11 Ear, Nose and Throat"
+11.01.02.00 Ear - Vestibular Disorder,8,"11 Ear, Nose and Throat"
+11.02.01.00 Face/cosmetic,2,"11 Ear, Nose and Throat"
+11.02.02.00 Face/eye/cosmetic,2,"11 Ear, Nose and Throat"
+11.03.01.00 Nose/Throat/Related Structures - Respiration,2,"11 Ear, Nose and Throat"
+11.03.02.00 Nose/Throat/Related Structures - Mastication and Deglutition,2,"11 Ear, Nose and Throat"
+11.03.03.00 Nose/Throat/Related Structures - Olfaction and Taste,2,"11 Ear, Nose and Throat"
+11.03.04.00 Nose/Throat/Related Structures - Voice and Speech,2,"11 Ear, Nose and Throat"
 12.01.00.00 Visual Acuity,1,12 Visual System
 12.02.00.00 Visual Field,1,12 Visual System
 12.03.00.00 Visual System,1,12 Visual System
-13.01.00.00 Consciousness Disorder,6,13 Central & Peripheral Nervous System
-13.02.00.00 Episodic Neurologic Disorder,2,13 Central & Peripheral Nervous System
-13.03.00.00 Arousal Disorder,6,13 Central & Peripheral Nervous System
-13.04.00.00 Cognitive Impairment,2,13 Central & Peripheral Nervous System
-13.05.00.00 Language Disorder,2,13 Central & Peripheral Nervous System
-13.06.00.00 Behavioral/Emotional Disorder,8,13 Central & Peripheral Nervous System
-13.07.01.00 Cranial Nerve - Olfactory,2,13 Central & Peripheral Nervous System
-13.07.02.00 Cranial Nerve - Optic,1,13 Central & Peripheral Nervous System
-"13.07.03.00 Cranial Nerve - Oculomotor, Trochlear & Abducens",2,13 Central & Peripheral Nervous System
-13.07.04.00 Cranial Nerve - Trigeminal,2,13 Central & Peripheral Nervous System
-13.07.05.00 Cranial Nerve - Facial,2,13 Central & Peripheral Nervous System
-13.07.06.01 Cranial Nerve - Vestibulocochlear - Vertigo,8,13 Central & Peripheral Nervous System
-13.07.06.02 Cranial Nerve - Vestibulocochlear - Tinnitus,8,13 Central & Peripheral Nervous System
-13.07.07.00 Cranial Nerve - Glossopharyngeal & Valgus,2,13 Central & Peripheral Nervous System
-13.07.08.00 Cranial Nerve - Spinal Accessory,2,13 Central & Peripheral Nervous System
-13.07.09.00 Cranial Nerve - Hypoglossal,2,13 Central & Peripheral Nervous System
-"13.08.00.00 Station, Gait, Movement",5,13 Central & Peripheral Nervous System
-13.09.00.00 Upper Extremities,5,13 Central & Peripheral Nervous System
-13.10.01.00 Spinal Cord Disorder - Respiratory,7,13 Central & Peripheral Nervous System
-13.10.02.00 Spinal Cord Disorder - Urinary,2,13 Central & Peripheral Nervous System
-13.10.03.00 Spinal Cord Disorder - Anorectal,2,13 Central & Peripheral Nervous System
-13.10.04.00 Spinal Cord Disorder - Sexual,2,13 Central & Peripheral Nervous System
-13.11.01.01 Chronic Pain - Upper Extremities - Causalgia,5,13 Central & Peripheral Nervous System
-13.11.01.02 Chronic Pain - Upper Extremities - Post-traumatic Neuralgia,5,13 Central & Peripheral Nervous System
-13.11.01.03 Chronic Pain - Upper Extremities - Reflex Sympathetic Dystrophy,5,13 Central & Peripheral Nervous System
-13.11.02.01 Chronic Pain - Lower Extremities - Causalgia,5,13 Central & Peripheral Nervous System
-13.11.02.02 Chronic Pain - Lower Extremities - Post-traumatic Neuralgia,5,13 Central & Peripheral Nervous System
-13.11.02.03 Chronic Pain - Lower Extremities - Reflex Sympathetic Dystrophy,5,13 Central & Peripheral Nervous System
-13.12.01.01 Peripheral Nerve System - Spine - Sensory,5,13 Central & Peripheral Nervous System
-13.12.01.02 Peripheral Nerve System - Spine - Motor,5,13 Central & Peripheral Nervous System
-13.12.02.01 Peripheral Nerve System - Upper Extremity - Sensory,5,13 Central & Peripheral Nervous System
-13.12.02.02 Peripheral Nerve System - Upper Extremity - Motor,5,13 Central & Peripheral Nervous System
-13.12.03.01 Peripheral Nerve System - Lower Extremity - Sensory,5,13 Central & Peripheral Nervous System
-13.12.03.02 Peripheral Nerve System - Lower Extremity - Motor,5,13 Central & Peripheral Nervous System
-14.01.00.00 Psychiatric - Mental and Behavioral,8,14 Mental & Behavioral Disorders
+13.01.00.00 Consciousness Disorder,6,13 Central and Peripheral Nervous System
+13.02.00.00 Episodic Neurologic Disorder,2,13 Central and Peripheral Nervous System
+13.03.00.00 Arousal Disorder,6,13 Central and Peripheral Nervous System
+13.04.00.00 Cognitive Impairment,2,13 Central and Peripheral Nervous System
+13.05.00.00 Language Disorder,2,13 Central and Peripheral Nervous System
+13.06.00.00 Behavioral/Emotional Disorder,8,13 Central and Peripheral Nervous System
+13.07.01.00 Cranial Nerve - Olfactory,2,13 Central and Peripheral Nervous System
+13.07.02.00 Cranial Nerve - Optic,1,13 Central and Peripheral Nervous System
+"13.07.03.00 Cranial Nerve - Oculomotor, Trochlear and Abducens",2,13 Central and Peripheral Nervous System
+13.07.04.00 Cranial Nerve - Trigeminal,2,13 Central and Peripheral Nervous System
+13.07.05.00 Cranial Nerve - Facial,2,13 Central and Peripheral Nervous System
+13.07.06.01 Cranial Nerve - Vestibulocochlear - Vertigo,8,13 Central and Peripheral Nervous System
+13.07.06.02 Cranial Nerve - Vestibulocochlear - Tinnitus,8,13 Central and Peripheral Nervous System
+13.07.07.00 Cranial Nerve - Glossopharyngeal and Valgus,2,13 Central and Peripheral Nervous System
+13.07.08.00 Cranial Nerve - Spinal Accessory,2,13 Central and Peripheral Nervous System
+13.07.09.00 Cranial Nerve - Hypoglossal,2,13 Central and Peripheral Nervous System
+"13.08.00.00 Station, Gait, Movement",5,13 Central and Peripheral Nervous System
+13.09.00.00 Upper Extremities,5,13 Central and Peripheral Nervous System
+13.10.01.00 Spinal Cord Disorder - Respiratory,7,13 Central and Peripheral Nervous System
+13.10.02.00 Spinal Cord Disorder - Urinary,2,13 Central and Peripheral Nervous System
+13.10.03.00 Spinal Cord Disorder - Anorectal,2,13 Central and Peripheral Nervous System
+13.10.04.00 Spinal Cord Disorder - Sexual,2,13 Central and Peripheral Nervous System
+13.11.01.01 Chronic Pain - Upper Extremities - Causalgia,5,13 Central and Peripheral Nervous System
+13.11.01.02 Chronic Pain - Upper Extremities - Post-traumatic Neuralgia,5,13 Central and Peripheral Nervous System
+13.11.01.03 Chronic Pain - Upper Extremities - Reflex Sympathetic Dystrophy,5,13 Central and Peripheral Nervous System
+13.11.02.01 Chronic Pain - Lower Extremities - Causalgia,5,13 Central and Peripheral Nervous System
+13.11.02.02 Chronic Pain - Lower Extremities - Post-traumatic Neuralgia,5,13 Central and Peripheral Nervous System
+13.11.02.03 Chronic Pain - Lower Extremities - Reflex Sympathetic Dystrophy,5,13 Central and Peripheral Nervous System
+13.12.01.01 Peripheral Nerve System - Spine - Sensory,5,13 Central and Peripheral Nervous System
+13.12.01.02 Peripheral Nerve System - Spine - Motor,5,13 Central and Peripheral Nervous System
+13.12.02.01 Peripheral Nerve System - Upper Extremity - Sensory,5,13 Central and Peripheral Nervous System
+13.12.02.02 Peripheral Nerve System - Upper Extremity - Motor,5,13 Central and Peripheral Nervous System
+13.12.03.01 Peripheral Nerve System - Lower Extremity - Sensory,5,13 Central and Peripheral Nervous System
+13.12.03.02 Peripheral Nerve System - Lower Extremity - Motor,5,13 Central and Peripheral Nervous System
+14.01.00.00 Psychiatric - Mental and Behavioral,8,14 Mental and Behavioral Disorders
 15.01.01.00 Cervical - Diagnosis-related Estimate (DRE),5,15 Spine
 15.01.02.01 Cervical - Range of Motion (ROM) - Fracture,5,15 Spine
 15.01.02.02 Cervical - Range of Motion - Soft Tissue Lesion,5,15 Spine
