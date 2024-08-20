@@ -66,12 +66,6 @@ def calculate():
         age = str(request.form['age'])
 
         result = california_adjustment(impairment_standard, impairment_number, occupational_group, age)
-        
-        # Convert to standard Python int
-        if isinstance(result, pd.Series) or isinstance(result, pd.DataFrame):
-            result = result.to_dict()  # If the result is a pandas Series or DataFrame
-        else:
-            result = str(result)  # Convert int64 to standard int if it's a single number
             
         return jsonify({"age_adjustment": str(result)})
 
