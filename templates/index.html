@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>AMA/California Calculator</h1>
-    <h2>beta version 0.1 by Hsuli</h2>
+    <h2>by Hsuli (beta version 0.1)</h2>
     <form id="ama-form">
         <!-- Impairment Standard -->
         <label for="impairment_standard">Impairment Standard:</label>
@@ -60,7 +60,7 @@
                         data.forEach(item => {
                             const option = document.createElement('option');
                             option.value = item.Impairment_Number;  // This value will still be the Impairment Number
-                            option.text = item.Description; // Display the description in the dropdown
+                            option.text = item.Impairment_Description; // Display the description in the dropdown
                             impairmentDropdown.appendChild(option);
                         });
                     })
@@ -81,7 +81,7 @@
             .then(response => response.json())
             .then(data => {
                 const resultDiv = document.getElementById('result');
-                resultDiv.innerHTML = `<p>Adjusted WPI: ${data.age_adjustment}%</p>`;
+                resultDiv.innerHTML = `<p>Adjusted WPI = ${data.age_adjustment}%</p>`;
             })
             .catch(error => {
                 console.error("Error calculating:", error);
