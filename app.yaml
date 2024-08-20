@@ -4,6 +4,7 @@ entrypoint: gunicorn -b :$PORT main:app
 env_variables:
   # Add any environment variables you need here, such as API keys or settings.
   # EXAMPLE_VAR: "example_value"
+  # API_KEY: "your_api_key_here"
 
 handlers:
   - url: /static

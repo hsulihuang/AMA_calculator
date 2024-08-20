@@ -1,5 +1,5 @@
-from flask import Flask, request, jsonify, render_template
-import pandas as pd
+from flask import Flask, request, jsonify, render_template # type: ignore
+import pandas as pd # type: ignore
 
 app = Flask(__name__)
 

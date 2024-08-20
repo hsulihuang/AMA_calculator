@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AMA/California Calculator by Hsuli</title>
+    <title>AMA/California WPI Calculator by Hsuli</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="container">
-    <h1 class="my-4">AMA/California Calculator</h1>
-    <h2 class="mb-4">by hsulihuang (beta version 0.1)</h2>
+    <h4 class="my-4">AMA/California WPI Calculator</h4>
+    <h5 class="mb-4">by hsulihuang (beta version 0.1.1)</h5>
     <form id="ama-form">
         <div class="form-group">
             <label for="impairment_standard">Impairment Standard:</label>
@@ -17,9 +17,9 @@
         </div>
 
         <div class="form-group">
-            <label for="category">Category:</label>
+            <label for="category">Injury Category:</label>
             <select id="category" name="category" class="form-control" required>
-                <option value="">Select Category</option>
+                <option value="">Select Injury Category</option>
                 {% for category in categories %}
                 <option value="{{ category }}">{{ category }}</option>
                 {% endfor %}
