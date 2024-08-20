@@ -4,13 +4,13 @@ import pandas as pd
 app = Flask(__name__)
 
 # Import Tables
-table21 = pd.read_csv('tables/table21.csv', sep=',')
-table22 = pd.read_csv('tables/table22.csv', sep=',')
-table23 = pd.read_csv('tables/table23.csv', sep=',')
-table41 = pd.read_csv('tables/table41.csv', sep=',')
-table51 = pd.read_csv('tables/table51.csv', sep=',')
-table61 = pd.read_csv('tables/table61.csv', sep=',')
-table62 = pd.read_csv('tables/table62.csv', sep=',')
+table21 = pd.read_csv('tables/table21.csv', sep=',', dtype=str)
+table22 = pd.read_csv('tables/table22.csv', sep=',', dtype=str)
+table23 = pd.read_csv('tables/table23.csv', sep=',', dtype=str)
+table41 = pd.read_csv('tables/table41.csv', sep=',', dtype=str)
+table51 = pd.read_csv('tables/table51.csv', sep=',', dtype=str)
+table61 = pd.read_csv('tables/table61.csv', sep=',', dtype=str)
+table62 = pd.read_csv('tables/table62.csv', sep=',', dtype=str)
 
 # Function to perform the California adjustment calculation
 def california_adjustment(impairment_standard, impairment_number, occupational_group, age):
@@ -28,7 +28,7 @@ def california_adjustment(impairment_standard, impairment_number, occupational_g
         occupational_adjustment = table51.loc[table51['Occupational Variant'] == occupational_variant, str(FEC_adjustment)].values[0]
         
         # Step 05: Find the Age Group for the given Age
-        age_group = table61.loc[table61['Age'] == int(age), 'Age Group'].values[0]
+        age_group = table61.loc[table61['Age'] == str(age), 'Age Group'].values[0]
         
         # Step 06: Find the Age Adjustment for the given Occupational Adjustment and Age Group
         age_adjustment = table62.loc[table62['Age Group'] == age_group, str(occupational_adjustment)].values[0]
@@ -61,7 +61,7 @@ def calculate():
         impairment_standard = request.form['impairment_standard']
         impairment_number = request.form['impairment_number']
         occupational_group = request.form['occupational_group']
-        age = int(request.form['age'])
+        age = str(request.form['age'])
 
         result = california_adjustment(impairment_standard, impairment_number, occupational_group, age)
         
@@ -69,9 +69,9 @@ def calculate():
         if isinstance(result, pd.Series) or isinstance(result, pd.DataFrame):
             result = result.to_dict()  # If the result is a pandas Series or DataFrame
         else:
-            result = int(result)  # Convert int64 to standard int if it's a single number
+            result = str(result)  # Convert int64 to standard int if it's a single number
             
-        return jsonify({"age_adjustment": int(result)})
+        return jsonify({"age_adjustment": str(result)})
 
     except Exception as e:
         print(f"An error occurred: {e}")
