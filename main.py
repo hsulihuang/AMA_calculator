@@ -51,7 +51,7 @@ def get_impairment_numbers():
         impairment_numbers = table22.loc[table22['Category'] == str(selected_category), ['Impairment Number', 'Impairment Description']]
 
         # Return a list of dictionaries with both the number and the description
-        return jsonify([{'Impairment_Number': row['Impairment Number'], 'Impairment Description': row['Impairment Description']} for _, row in impairment_numbers.iterrows()])
+        return jsonify([{'Impairment_Number': row['Impairment Number'], 'Impairment_Description': row['Impairment Description']} for _, row in impairment_numbers.iterrows()])
 
     except Exception as e:
         print(f"Error fetching impairment numbers: {e}")
