@@ -6,7 +6,8 @@
     <title>AMA/California Calculator by Hsuli</title>
 </head>
 <body>
-    <h1>AMA/California Calculator by Hsuli (beta version 0.1)</h1>
+    <h1>AMA/California Calculator</h1>
+    <h2>beta version 0.1 by Hsuli</h2>
     <form id="ama-form">
         <!-- Impairment Standard -->
         <label for="impairment_standard">Impairment Standard:</label>
@@ -20,7 +21,7 @@
             <option value="{{ category }}">{{ category }}</option>
             {% endfor %}
         </select><br><br>
-
+        
         <!-- Impairment Number -->
         <label for="impairment_number">Impairment Number:</label>
         <select id="impairment_number" name="impairment_number" required>
@@ -42,7 +43,7 @@
     <!-- Result Section -->
     <h2>Result:</h2>
     <div id="result"></div>
-
+    
     <script>
         document.getElementById('category').addEventListener('change', function() {
             const selectedCategory = this.value;
@@ -53,10 +54,13 @@
                 fetch(`/get_impairment_numbers?category=${selectedCategory}`)
                     .then(response => response.json())
                     .then(data => {
+                        if (data.length === 0) {
+                            console.log("No impairment numbers found for the selected category.");
+                        }
                         data.forEach(item => {
                             const option = document.createElement('option');
-                            option.value = item.Impairment_Number;
-                            option.text = item.Impairment_Number;
+                            option.value = item.Impairment_Number;  // This value will still be the Impairment Number
+                            option.text = item.Description; // Display the description in the dropdown
                             impairmentDropdown.appendChild(option);
                         });
                     })
@@ -77,7 +81,7 @@
             .then(response => response.json())
             .then(data => {
                 const resultDiv = document.getElementById('result');
-                resultDiv.innerHTML = `<p>Age Adjustment: ${data.age_adjustment}</p>`;
+                resultDiv.innerHTML = `<p>Adjusted WPI: ${data.age_adjustment}%</p>`;
             })
             .catch(error => {
                 console.error("Error calculating:", error);
