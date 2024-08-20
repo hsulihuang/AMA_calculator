@@ -33,6 +33,7 @@ def california_adjustment(impairment_standard, impairment_number, occupational_g
         # Step 06: Find the Age Adjustment for the given Occupational Adjustment and Age Group
         age_adjustment = table62.loc[table62['Age Group'] == age_group, str(occupational_adjustment)].values[0]
         
+        # Return the Age Adjustment aka the Adjusted WPI
         return age_adjustment
 
     except Exception as e:
@@ -60,6 +61,52 @@ def get_impairment_numbers():
 @app.route('/calculate', methods=['POST'])
 def calculate():
     try:
+        impairment_standard = str(request.form['impairment_standard'])
+        impairment_number = str(request.form['impairment_number'])
+        occupational_group = str(request.form['occupational_group'])
+        age = str(request.form['age'])
+
+        # Step 00: Get Impairment Description
+        impairment_description = table22.loc[table22['Impairment Number'] == impairment_number, 'Impairment Description'].values[0]
+        
+        # Step 01: Find the FEC Rank for the given Impairment Number
+        FEC_rank = table22.loc[table22['Impairment Number'] == impairment_number, 'Rank'].values[0]
+        
+        # Step 02: Find the FEC Adjustment for the given Impairment Standard and FEC Rank
+        FEC_adjustment = table23.loc[table23['FEC Rank'] == FEC_rank, impairment_standard].values[0]
+        
+        # Step 03: Find the Occupational Variant for the given Impairment Number and Occupational Group
+        occupational_variant = table41.loc[table41['Impairment Number'] == impairment_number, occupational_group].values[0]
+        
+        # Step 04: Find the Occupational Adjustment for the given FEC Adjustment and Occupational Variant
+        occupational_adjustment = table51.loc[table51['Occupational Variant'] == occupational_variant, FEC_adjustment].values[0]
+        
+        # Step 05: Find the Age Group for the given Age
+        age_group = table61.loc[table61['Age'] == age, 'Age Group'].values[0]
+        
+        # Step 06: Find the Age Adjustment for the given Occupational Adjustment and Age Group
+        age_adjustment = table62.loc[table62['Age Group'] == age_group, occupational_adjustment].values[0]
+        
+        # Return all the relevant data    
+        return jsonify({
+            "impairment_description": impairment_description,
+            "FEC_rank": FEC_rank,
+            "FEC_adjustment": FEC_adjustment,
+            "occupational_group": occupational_group,
+            "occupational_variant": occupational_variant,
+            "occupational_adjustment": occupational_adjustment,
+            "age": age,
+            "age_adjustment": age_adjustment
+        })
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return "An error occurred", 500
+
+'''
+@app.route('/calculate', methods=['POST'])
+def calculate():
+    try:
         impairment_standard = request.form['impairment_standard']
         impairment_number = request.form['impairment_number']
         occupational_group = request.form['occupational_group']
@@ -67,11 +114,12 @@ def calculate():
 
         result = california_adjustment(impairment_standard, impairment_number, occupational_group, age)
             
-        return jsonify({"age_adjustment": str(result)})
+        return jsonify(result)
 
     except Exception as e:
         print(f"An error occurred: {e}")
         return "An error occurred", 500
+'''
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
