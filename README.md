@@ -3,11 +3,11 @@
 **GitHub Repository:** [https://github.com/hsulihuang/AMA_calculator](https://github.com/hsulihuang/AMA_calculator)
 
 ## Description
-The AMA/California WPI Calculator is a tool designed to automate and simplify the process of calculating the adjusted Whole Person Impairment (WPI). This calculation is based on the Impairment Standard, Impairment Number, Occupational Group, and Age of the injured worker. The tool is particularly useful for healthcare professionals documenting cases in alignment with the standardized forms used at the Department of Environmental and Occupational Medicine (EOM) at National Taiwan University Hospital (NTUH).
+The AMA/California WPI Calculator is a tool designed to automate and simplify the process of calculating the adjusted Whole Person Impairment (WPI). This calculation is based on the Impairment Standard, Impairment Number, Occupational Group, and Age of the injured worker. The tool is particularly useful for healthcare professionals documenting cases in alignment with the custom forms used at the Department of Environmental and Occupational Medicine (EOM) at National Taiwan University Hospital (NTUH).
 
 ## Version History
 - **Version 0.1.1** (2024/08/21)
-  - Updated the output format to align with the standardized forms used at the EOM at NTUH.
+  - Updated the output format to align with the custom forms used at the EOM at NTUH.
 
 - **Version 0.1** (2024/08/20)
   - Initial deployment to the web using Google Cloud App Engine.
