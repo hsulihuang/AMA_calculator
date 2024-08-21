@@ -4,12 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AMA/California WPI Calculator by Hsuli</title>
+
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="container">
     <h4 class="my-4">AMA/California WPI Calculator</h4>
     <h5 class="mb-4">by hsulihuang (beta version 0.1.1)</h5>
+
+    <!-- link to README -->
+    <p>
+        <a href="https://github.com/hsulihuang/AMA_calculator/blob/main/README.md" target="_blank">View README</a>
+    </p>
+    
+    <!-- Input Section -->
     <form id="ama-form">
         <div class="form-group">
             <label for="impairment_standard">Impairment Standard:</label>
@@ -84,7 +92,7 @@
 
         document.getElementById('ama-form').addEventListener('submit', function(event) {
             event.preventDefault();
-            
+
             const formData = new FormData(this);
             fetch('/calculate', {
                 method: 'POST',
