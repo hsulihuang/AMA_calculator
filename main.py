@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, render_template # type: ignore
 import pandas as pd # type: ignore
+from combine import combine_ratings  # Import the combine_ratings function from combine.py
 
 app = Flask(__name__)
 
@@ -103,6 +104,7 @@ def calculate():
         print(f"An error occurred: {e}")
         return "An error occurred", 500
 
+# An old version calculate() to return only the final adjusted WPI
 '''
 @app.route('/calculate', methods=['POST'])
 def calculate():
@@ -120,6 +122,21 @@ def calculate():
         print(f"An error occurred: {e}")
         return "An error occurred", 500
 '''
+
+# New route to handle combining ratings
+@app.route('/combine_ratings', methods=['POST'])
+def combine():
+    try:
+        ratings = request.json.get('ratings', [])
+        if not ratings or not all(isinstance(r, int) for r in ratings):
+            return jsonify({"error": "Please provide a list of integer ratings."}), 400
+
+        combined_rating = combine_ratings(ratings)
+        return jsonify({"combined_final_rating": combined_rating})
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({"error": "An error occurred while combining ratings."}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

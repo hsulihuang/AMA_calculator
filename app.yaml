@@ -14,13 +14,22 @@ handlers:
     script: auto
 
 automatic_scaling:
-  target_cpu_utilization: 0.65
+  target_cpu_utilization: 0.4
   min_instances: 1
-  max_instances: 5
+  max_instances: 2
 
 resources:
-  cpu: .5
-  memory_gb: 0.5
+  cpu: 0.25
+  memory_gb: 0.25
   disk_size_gb: 10
 
-instance_class: F2
+instance_class: F1
+
+# To saty in the Google Cloud Free Tier when using the App Engine, make sure:
+  # Environment:
+    # Deploy to the Standard Environment, instead of the Flexible Environment.
+    # Avaliable runtime: python37, python39, nodejs16, java11, and more.
+  # Usage limits: 
+    # 28 hours per day of F1 instances
+    # 9 hours per day of B1 instances
+    # 1 GB of outbound data transfer per day

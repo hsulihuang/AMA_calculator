@@ -28,4 +28,11 @@ The Occupational Group refers to the type of occupation the employee was engaged
 The Age is the injured worker's age at the time of the injury.
 
 ### Final Permanent Disability Rating
-The Final Permanent Disability Rating is the overall disability percentage for a single impairment, as determined by the age adjustment table.
+The Final Permanent Disability Rating represents the overall disability percentage for a **single impairment**. This rating, often referred to as the adjusted WPI, is determined by adjusting an AMA impairment rating to account for factors such as diminished future earning capacity, occupation, and age.
+
+### Combined Final Permanent Disability Rating
+Impairments and disabilities are typically combined using the formula \[ a + b(1-a) \], where "a" and "b" represent the decimal equivalents of the impairment or disability percentages.
+
+When combining three or more ratings on the same scale into a single rating, begin by combining the two largest ratings first, rounding the result to the nearest whole percent. Then, combine that result with the next largest rating, and repeat this process until all ratings are combined. Ensure that each successive calculation result is rounded before proceeding with the next combination.
+
+All impairments are initially converted to the whole person scale, adjusted as necessary, and then combined to determine the final overall disability rating.

@@ -17,7 +17,7 @@
         <a href="https://github.com/hsulihuang/AMA_calculator/blob/main/README.md" target="_blank">View README</a>
     </p>
     
-    <!-- Input Section -->
+    <!-- Adjusting WPI -->
     <form id="ama-form">
         <div class="form-group">
             <label for="impairment_standard">Impairment Standard:</label>
@@ -54,6 +54,16 @@
         <button type="submit" class="btn btn-primary">Calculate</button>
     </form>
 
+    <!-- Combined Ratings Form -->
+    <h4 class="mt-5">Combine Ratings</h4>
+    <form id="combine-form">
+        <div class="form-group">
+            <label for="ratings">Enter Ratings (comma-separated):</label>
+            <input type="text" class="form-control" id="ratings" name="ratings" placeholder="e.g., 10, 30, 20" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Combine Ratings</button>
+    </form>    
+    
     <!-- Result Section -->
     <h2 class="mt-4">Result:</h2>
     <div id="result" class="mb-3"></div>
@@ -112,6 +122,34 @@
                 console.error("Error calculating:", error);
                 const resultDiv = document.getElementById('result');
                 resultDiv.innerHTML = `<p style="color: red;">An error occurred while calculating. Please try again.</p>`;
+            });
+        });
+
+        // New script for combining ratings
+        document.getElementById('combine-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const ratingsInput = document.getElementById('ratings').value;
+            const ratings = ratingsInput.split(',').map(Number);
+            
+            fetch('/combine_ratings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ratings })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('result');
+                if (data.error) {
+                    resultDiv.innerHTML = `<p style="color: red;">${data.error}</p>`;
+                } else {
+                    resultDiv.innerHTML = `<p>Combined Final Rating: ${data.combined_final_rating}%</p>`;
+                }
+            })
+            .catch(error => {
+                console.error("Error combining ratings:", error);
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `<p style="color: red;">An error occurred while combining ratings. Please try again.</p>`;
             });
         });
 
