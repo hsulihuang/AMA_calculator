@@ -3,15 +3,17 @@
 - **URL to the App**: [https://hsuli-project-01.uc.r.appspot.com/](https://hsuli-project-01.uc.r.appspot.com/)
 - **GitHub Repository**: [https://github.com/hsulihuang/AMA_calculator](https://github.com/hsulihuang/AMA_calculator)
 
-## Description
+## Introduction
 
-The AMA/California WPI Calculator is a tool designed to automate and simplify the calculation of the adjusted Whole Person Impairment (WPI). This calculation is based on inputs including the Impairment Standard, Impairment Number, Occupational Group, and Age of the injured worker. It is particularly useful for healthcare professionals who need to document cases in alignment with the commonly used format at the Department of Environmental and Occupational Medicine (EOM) at National Taiwan University Hospital (NTUH).
+The AMA/California WPI Calculator is a tool designed to automate and simplify the calculation of the adjusted Whole Person Impairment (WPI) in accordance with the methodology described in the Schedule for Rating Permanent Disabilities proposed by the State of California.
+
+This calculation is based on inputs including the Impairment Standard, Impairment Number, Occupational Group, and Age of the injured worker, as defined in the Schedule. The tool is especially useful for physicians documenting cases in a format commonly used at the Department of Environmental and Occupational Medicine (EOM) at National Taiwan University Hospital (NTUH).
 
 ## Version History
 
-- **Version 0.1.2 (2024/08/21)**: Updated a new function "combining ratings".
+- **Version 0.2.0 (2024/08/21)**: Add a new function "combining ratings".
 - **Version 0.1.1 (2024/08/20)**: Updated the output format to align with the commonly used format at the EOM at NTUH.
-- **Version 0.1 (2024/08/19)**: Initial deployment to the web using Google Cloud App Engine.
+- **Version 0.1.0 (2024/08/19)**: Initial deployment to the web using Google Cloud App Engine.
 
 ## Terminology
 
