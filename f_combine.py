@@ -1,8 +1,6 @@
-def combine_ratings(ratings):
-    """
-    Combine multiple disability ratings using the formula a + b(1-a).
-    Ratings should be provided as percentages (e.g., 30 for 30%).
-    """
+# Combine multiple disability ratings using the formula a + b(1-a).
+# Ratings should be provided as percentages (e.g., 30 for 30%).
+def f_combine(ratings):
     ratings = sorted(ratings, reverse=True)
     combined_rating = ratings[0]
     
@@ -16,5 +14,5 @@ def combine_ratings(ratings):
 if __name__ == "__main__":
     # Example input
     ratings = [10, 30, 20]
-    final_rating = combine_ratings(ratings)
+    final_rating = f_combine(ratings)
     print(f"Combined Final Rating: {final_rating}%")

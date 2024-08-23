@@ -22,40 +22,63 @@
         <h6 class="mb-0">by hsulihuang (beta version 0.2.0)</h6>
     </div> 
 
-    <!-- Adjusting WPI -->
+    <!-- Adjusting WPI Form -->
     <form id="ama-form">
+         <!-- Toggle between input modes -->
+         <div class="form-group">
+            <label for="input_mode">
+                <input type="checkbox" id="input_mode"> Switch input mode
+            </label>
+        </div>
+
+        <!-- Section for entering Impairment Standard -->
         <div class="form-group">
             <label for="impairment_standard">Impairment Standard:</label>
             <input type="number" class="form-control" id="impairment_standard" name="impairment_standard" required>
         </div>
-
-        <div class="form-group">
-            <label for="category">Injury Category:</label>
-            <select id="category" name="category" class="form-control" required>
-                <option value="">Select Injury Category</option>
-                {% for category in categories %}
-                <option value="{{ category }}">{{ category }}</option>
-                {% endfor %}
-            </select>
+    
+        <!-- Simplified Input Mode -->
+        <div id="simplified_input_mode" style="display:none;">
+            <div class="form-group">
+                <label for="FEC_rank">FEC Rank:</label>
+                <input type="number" class="form-control" id="FEC_rank" name="FEC_rank">
+            </div>
+            <div class="form-group">
+                <label for="occupational_variant">Occupational Variant:</label>
+                <input type="text" class="form-control" id="occupational_variant" name="occupational_variant">
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="impairment_number">Impairment Number:</label>
-            <select id="impairment_number" name="impairment_number" class="form-control" required>
-                <option value="">Select Impairment Number</option>
-            </select>
+        <!-- Completed Input Mode -->
+        <div id="completed_input_mode">
+            <div class="form-group">
+                <label for="category">Injury Category:</label>
+                <select id="category" name="category" class="form-control">
+                    <option value="">Select Injury Category</option>
+                    {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="impairment_number">Impairment Number:</label>
+                <select id="impairment_number" name="impairment_number" class="form-control">
+                    <option value="">Select Impairment Number</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="occupational_group">Occupational Group:</label>
+                <input type="number" class="form-control" id="occupational_group" name="occupational_group">
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="occupational_group">Occupational Group:</label>
-            <input type="text" class="form-control" id="occupational_group" name="occupational_group" required>
-        </div>
-
+        <!-- Section for entering Age -->
         <div class="form-group">
             <label for="age">Age:</label>
             <input type="number" class="form-control" id="age" name="age" required>
         </div>
 
+        <!-- Section for Calculate button -->
         <button type="submit" class="btn btn-primary">Calculate</button>
     </form>
 
@@ -80,11 +103,30 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
+        // Handle the toggle between input modes
+        document.getElementById('input_mode').addEventListener('change', function() {
+            const isChecked = this.checked;
+            const simplifiedMode = document.getElementById('simplified_input_mode');
+            const completedMode = document.getElementById('completed_input_mode');
+
+            // Toggle visibility of input sections
+            simplifiedMode.style.display = isChecked ? 'block' : 'none';
+            completedMode.style.display = isChecked ? 'none' : 'block';
+
+            // Enable or disable relevant input fields
+            document.getElementById('FEC_rank').disabled = !isChecked;
+            document.getElementById('occupational_variant').disabled = !isChecked;
+            document.getElementById('category').disabled = isChecked;
+            document.getElementById('impairment_number').disabled = isChecked;
+            document.getElementById('occupational_group').disabled = isChecked;
+        });
+
+        // Fetch impairment numbers based on selected category
         document.getElementById('category').addEventListener('change', function() {
             const selectedCategory = this.value;
             const impairmentDropdown = document.getElementById('impairment_number');
             impairmentDropdown.innerHTML = '<option value="">Select Impairment Number</option>';
-    
+
             if (selectedCategory) {
                 fetch(`/get_impairment_numbers?category=${selectedCategory}`)
                     .then(response => response.json())
@@ -105,10 +147,15 @@
             }
         });
 
+        // Handle form submission
         document.getElementById('ama-form').addEventListener('submit', function(event) {
             event.preventDefault();
 
             const formData = new FormData(this);
+
+            // Add the input_mode status to the form data
+            formData.append('input_mode', document.getElementById('input_mode').checked ? 'on' : 'off');
+
             fetch('/calculate', {
                 method: 'POST',
                 body: formData
@@ -117,9 +164,10 @@
             .then(data => {
                 const resultDiv = document.getElementById('result');
                 resultDiv.innerHTML = `
-                    DBI: ${data.impairment_description}<br>
+                    WPI: ${data.impairment_standard}%<br>
+                    DBI: ${data.impairment_description || 'N/A'}<br>
                     FEC (${data.FEC_rank}): ${data.FEC_adjustment}%<br>
-                    Occupation (${data.occupational_group}, ${data.occupational_variant}): ${data.occupational_adjustment}%<br>
+                    Occupation (${data.occupational_group || 'N/A'}, ${data.occupational_variant}): ${data.occupational_adjustment}%<br>
                     Age (${data.age}): ${data.age_adjustment}%
                 `;
             })
@@ -130,14 +178,14 @@
             });
         });
 
-        // New script for combining ratings
+        // Script for combining ratings
         document.getElementById('combine-form').addEventListener('submit', function(event) {
             event.preventDefault();
-            
+
             const ratingsInput = document.getElementById('ratings').value;
             const ratings = ratingsInput.split(',').map(Number);
-            
-            fetch('/combine_ratings', {
+
+            fetch('/f_combine', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ratings })
@@ -148,7 +196,7 @@
                 if (data.error) {
                     resultDiv.innerHTML = `<p style="color: red;">${data.error}</p>`;
                 } else {
-                    resultDiv.innerHTML = `<p>Combined Final Rating: ${data.combined_final_rating}%</p>`;
+                    resultDiv.innerHTML = `<p>Final Combined Rating: ${data.combined_rating}%</p>`;
                 }
             })
             .catch(error => {
@@ -162,7 +210,7 @@
         document.getElementById('copy-button').addEventListener('click', function() {
             const resultText = document.getElementById('result').innerText;
             navigator.clipboard.writeText(resultText).then(function() {
-//                alert('Result copied to clipboard!');
+                // Success
             }, function(err) {
                 console.error('Failed to copy text: ', err);
             });
