@@ -35,8 +35,8 @@ def get_impairment_numbers():
         return jsonify([]), 500
 
 # Perform California adjustment
-@app.route('/calculate', methods=['POST'])
-def calculate():
+@app.route('/adjust', methods=['POST'])
+def adjust():
     try:
         input_mode = request.form.get('input_mode', 'off') == 'on'
     

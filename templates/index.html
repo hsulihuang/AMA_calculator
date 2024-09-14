@@ -78,8 +78,8 @@
             <input type="number" class="form-control" id="age" name="age" required>
         </div>
 
-        <!-- Section for Calculate button -->
-        <button type="submit" class="btn btn-primary">Calculate</button>
+        <!-- Section for Adjust button -->
+        <button type="submit" class="btn btn-primary">Adjust</button>
     </form>
 
     <!-- Combined Ratings Form -->
@@ -89,7 +89,7 @@
             <label for="ratings">Enter Ratings (comma-separated):</label>
             <input type="text" class="form-control" id="ratings" name="ratings" placeholder="e.g., 10, 30, 20" required>
         </div>
-        <button type="submit" class="btn btn-primary">Combine Ratings</button>
+        <button type="submit" class="btn btn-primary">Combine</button>
     </form>    
     
     <!-- Result Section -->
@@ -156,7 +156,7 @@
             // Add the input_mode status to the form data
             formData.append('input_mode', document.getElementById('input_mode').checked ? 'on' : 'off');
 
-            fetch('/calculate', {
+            fetch('/adjust', {
                 method: 'POST',
                 body: formData
             })
@@ -167,8 +167,7 @@
                     WPI: ${data.impairment_standard}%<br>
                     DBI: ${data.impairment_description || 'N/A'}<br>
                     FEC (${data.FEC_rank}): ${data.FEC_adjustment}%<br>
-                    Occupation (${data.occupational_group || 'N/A'}, ${data.occupational_variant}): ${data.occupational_adjustment}%<br>
-                    Age (${data.age}): ${data.age_adjustment}%
+                    Occupation (${data.occupational_group || 'N/A'}, ${data.occupational_variant}): ${data.occupational_adjustment}%<br>                        Age (${data.age}): ${data.age_adjustment}%
                 `;
             })
             .catch(error => {
